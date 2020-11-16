@@ -92,7 +92,7 @@ namespace AddressBookSystem_MultiThreading
                 using (connection)
                 {
                     connection.Open();
-                    string query = @"update dbo.Address_Book set email = @parameter1
+                    string query = @"update dbo.Address_Book set Email = @parameter1
                     where FirstName = @parameter2 and LastName = @parameter3";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@parameter1", EmailId);
