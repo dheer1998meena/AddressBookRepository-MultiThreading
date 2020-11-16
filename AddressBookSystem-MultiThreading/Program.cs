@@ -21,6 +21,10 @@ namespace AddressBookSystem_MultiThreading
             Console.WriteLine(repository.UpdateExistingContactUsingByName("Radha", "Yadav", "Radha658@gmail.com") ? "Updated Succesfully" : "Updated Failed");
             /// UC18 Retrieving the data from the address book entered within a date frame
             repository.RetrieveAllTheContactAddedInBetweenADate(Convert.ToDateTime("5/12/2018"));
+            /// UC19 Retrieve number of Contacts in the Database by City or State
+            repository.RetrieveNumberOfContactsByCityOrState();
+
         }
+
     }
 }

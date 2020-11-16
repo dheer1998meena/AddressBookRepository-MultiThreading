@@ -181,5 +181,60 @@ namespace AddressBookSystem_MultiThreading
             }
 
         }
+        /// <summary>
+        /// UC19 Retrieve number of Contacts in the Database by City or State
+        /// </summary>
+        /// <param name="newData"></param>
+        /// <param name="choice"></param>
+        public void RetrieveNumberOfContactsByCityOrState()
+        {
+            Console.WriteLine("Enter:\n1.For city\n2.For state");
+            int option = Convert.ToInt32(Console.ReadLine());
+            string query = "";
+            switch (option)
+            {
+                case 1:
+                    query = $@"select City,count(City) as PeopleInCity from Address_Book group by City";
+                    break;
+                case 2:
+                    query = $@"select StateName,count(StateName) as PeopleInCity from Address_Book group by StateName";
+                    break;
+            }
+            DBConnection dbc = new DBConnection();
+            connection = dbc.GetConnection();
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            string location = reader[0].ToString();
+                            int count = reader.GetInt32(1);
+                            Console.WriteLine($"City/StateName:{location}\nPeopleCount:{count}\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data found");
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (connection.State.Equals("Open"))
+                    connection.Close();
+            }
+        }
+
     }
 }
